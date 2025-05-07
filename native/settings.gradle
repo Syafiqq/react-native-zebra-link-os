@@ -21,3 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "ZebraLinkOsNative"
 include ':app'
+include ':lib'
