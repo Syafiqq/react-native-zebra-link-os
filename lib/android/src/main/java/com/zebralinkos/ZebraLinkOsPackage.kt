@@ -13,6 +13,7 @@ class ZebraLinkOsPackage : BaseReactPackage() {
     return when (name) {
         ZebraLinkOsPrinterDiscovererModule.NAME -> ZebraLinkOsPrinterDiscovererModule(reactContext)
         ZebraLinkOsPrinterConnectivityModule.NAME -> ZebraLinkOsPrinterConnectivityModule(reactContext)
+        ZebraLinkOsPrinterManagerModule.NAME -> ZebraLinkOsPrinterManagerModule(reactContext)
         else -> null
     }
   }
@@ -31,6 +32,14 @@ class ZebraLinkOsPackage : BaseReactPackage() {
       moduleInfos[ZebraLinkOsPrinterConnectivityModule.NAME] = ReactModuleInfo(
         ZebraLinkOsPrinterConnectivityModule.NAME,
         ZebraLinkOsPrinterConnectivityModule.NAME,
+        false,  // canOverrideExistingModule
+        false,  // needsEagerInit
+        false,  // isCxxModule
+        true // isTurboModule
+      )
+      moduleInfos[ZebraLinkOsPrinterManagerModule.NAME] = ReactModuleInfo(
+        ZebraLinkOsPrinterManagerModule.NAME,
+        ZebraLinkOsPrinterManagerModule.NAME,
         false,  // canOverrideExistingModule
         false,  // needsEagerInit
         false,  // isCxxModule

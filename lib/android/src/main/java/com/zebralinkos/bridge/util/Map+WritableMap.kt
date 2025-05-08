@@ -19,3 +19,11 @@ fun printerDiscoveriesMap(printer: Map<String, String?>): WritableMap {
     map.putString("type", printer["type"])
     return map
 }
+
+fun printerManagerPrint(result: Map<String, Boolean>): WritableMap {
+    val map: WritableMap = Arguments.createMap()
+    result.forEach { (key, value) ->
+        map.putBoolean(key, value)
+    }
+    return map
+}
