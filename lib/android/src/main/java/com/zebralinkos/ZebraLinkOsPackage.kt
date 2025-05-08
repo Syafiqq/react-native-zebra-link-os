@@ -12,6 +12,7 @@ class ZebraLinkOsPackage : BaseReactPackage() {
   override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
     return when (name) {
         ZebraLinkOsPrinterDiscovererModule.NAME -> ZebraLinkOsPrinterDiscovererModule(reactContext)
+        ZebraLinkOsPrinterConnectivityModule.NAME -> ZebraLinkOsPrinterConnectivityModule(reactContext)
         else -> null
     }
   }
@@ -22,6 +23,14 @@ class ZebraLinkOsPackage : BaseReactPackage() {
       moduleInfos[ZebraLinkOsPrinterDiscovererModule.NAME] = ReactModuleInfo(
         ZebraLinkOsPrinterDiscovererModule.NAME,
         ZebraLinkOsPrinterDiscovererModule.NAME,
+        false,  // canOverrideExistingModule
+        false,  // needsEagerInit
+        false,  // isCxxModule
+        true // isTurboModule
+      )
+      moduleInfos[ZebraLinkOsPrinterConnectivityModule.NAME] = ReactModuleInfo(
+        ZebraLinkOsPrinterConnectivityModule.NAME,
+        ZebraLinkOsPrinterConnectivityModule.NAME,
         false,  // canOverrideExistingModule
         false,  // needsEagerInit
         false,  // isCxxModule
