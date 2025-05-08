@@ -1,16 +1,21 @@
 package com.github.syafiqq.zebralinkosnative
 
+import DiscoveryType
 import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.lifecycle.lifecycleScope
+import com.zebralinkos.lib.PrinterConnectivity
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +35,22 @@ class MainActivity : AppCompatActivity() {
             if (enableBluetooth()) {
                 startActivity(DiscoverPrinterActivity.newIntent(this@MainActivity))
             }
+        }
+    }
+
+    fun onRequestTestTapped(view: View) {
+        onRequestTest()
+    }
+
+    fun onRequestTest() {
+        lifecycleScope.launch {
+            Log.d("CurrentLog", "onRequestTest - start")
+            PrinterConnectivity.connect(
+                "${DiscoveryType.BLUETOOTH.type}:A4:DA:32:85:6E:99:",
+                true,
+                this@MainActivity
+            )
+            Log.d("CurrentLog", "onRequestTest - finish")
         }
     }
 
