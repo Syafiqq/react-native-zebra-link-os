@@ -6,22 +6,40 @@ import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.module.model.ReactModuleInfo
 import com.facebook.react.module.model.ReactModuleInfoProvider
 import java.util.HashMap
+import com.zebralinkos.bridge.*
 
 class ZebraLinkOsPackage : BaseReactPackage() {
   override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
-    return if (name == ZebraLinkOsModule.NAME) {
-      ZebraLinkOsModule(reactContext)
-    } else {
-      null
+    return when (name) {
+        ZebraLinkOsPrinterDiscovererModule.NAME -> ZebraLinkOsPrinterDiscovererModule(reactContext)
+        ZebraLinkOsPrinterConnectivityModule.NAME -> ZebraLinkOsPrinterConnectivityModule(reactContext)
+        ZebraLinkOsPrinterManagerModule.NAME -> ZebraLinkOsPrinterManagerModule(reactContext)
+        else -> null
     }
   }
 
   override fun getReactModuleInfoProvider(): ReactModuleInfoProvider {
     return ReactModuleInfoProvider {
       val moduleInfos: MutableMap<String, ReactModuleInfo> = HashMap()
-      moduleInfos[ZebraLinkOsModule.NAME] = ReactModuleInfo(
-        ZebraLinkOsModule.NAME,
-        ZebraLinkOsModule.NAME,
+      moduleInfos[ZebraLinkOsPrinterDiscovererModule.NAME] = ReactModuleInfo(
+        ZebraLinkOsPrinterDiscovererModule.NAME,
+        ZebraLinkOsPrinterDiscovererModule.NAME,
+        false,  // canOverrideExistingModule
+        false,  // needsEagerInit
+        false,  // isCxxModule
+        true // isTurboModule
+      )
+      moduleInfos[ZebraLinkOsPrinterConnectivityModule.NAME] = ReactModuleInfo(
+        ZebraLinkOsPrinterConnectivityModule.NAME,
+        ZebraLinkOsPrinterConnectivityModule.NAME,
+        false,  // canOverrideExistingModule
+        false,  // needsEagerInit
+        false,  // isCxxModule
+        true // isTurboModule
+      )
+      moduleInfos[ZebraLinkOsPrinterManagerModule.NAME] = ReactModuleInfo(
+        ZebraLinkOsPrinterManagerModule.NAME,
+        ZebraLinkOsPrinterManagerModule.NAME,
         false,  // canOverrideExistingModule
         false,  // needsEagerInit
         false,  // isCxxModule

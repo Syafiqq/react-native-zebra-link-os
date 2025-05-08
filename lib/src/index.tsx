@@ -1,5 +1,5 @@
-import ZebraLinkOs from './NativeZebraLinkOs';
+import PrinterDiscoverer from './NativeZebraLinkOsPrinterDiscoverer';
+import PrinterConnectivity from './NativeZebraLinkOsPrinterConnectivity';
+import PrinterManager from './NativeZebraLinkOsPrinterManager';
 
-export function multiply(a: number, b: number): number {
-  return ZebraLinkOs.multiply(a, b);
-}
+export { PrinterDiscoverer, PrinterConnectivity, PrinterManager };
