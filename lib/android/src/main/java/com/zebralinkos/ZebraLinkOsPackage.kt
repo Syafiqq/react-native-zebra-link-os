@@ -9,24 +9,12 @@ import java.util.HashMap
 
 class ZebraLinkOsPackage : BaseReactPackage() {
   override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
-    return if (name == ZebraLinkOsModule.NAME) {
-      ZebraLinkOsModule(reactContext)
-    } else {
-      null
-    }
+    return null
   }
 
   override fun getReactModuleInfoProvider(): ReactModuleInfoProvider {
     return ReactModuleInfoProvider {
       val moduleInfos: MutableMap<String, ReactModuleInfo> = HashMap()
-      moduleInfos[ZebraLinkOsModule.NAME] = ReactModuleInfo(
-        ZebraLinkOsModule.NAME,
-        ZebraLinkOsModule.NAME,
-        false,  // canOverrideExistingModule
-        false,  // needsEagerInit
-        false,  // isCxxModule
-        true // isTurboModule
-      )
       moduleInfos
     }
   }
