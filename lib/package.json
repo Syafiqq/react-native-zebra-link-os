@@ -160,5 +160,6 @@
     "languages": "kotlin-objc",
     "type": "turbo-module",
     "version": "0.50.2"
-  }
+  },
+  "private": true
 }
