@@ -1,6 +1,7 @@
 package com.github.syafiqq.zebralinkosnative
 
 import DiscoveryType
+import PrinterManager
 import android.Manifest
 import android.bluetooth.BluetoothAdapter
 import android.content.pm.PackageManager
@@ -15,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.lifecycleScope
 import com.zebralinkos.lib.PrinterConnectivity
+import com.zebralinkos.lib.printer.util.PrintJob
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -51,6 +53,50 @@ class MainActivity : AppCompatActivity() {
                 this@MainActivity
             )
             Log.d("CurrentLog", "onRequestTest - finish")
+        }
+    }
+
+    fun onBulkPrintTapped(view: View) {
+        onBulkPrint()
+    }
+
+    fun onBulkPrint() {
+        lifecycleScope.launch {
+            try {
+                Log.d("CurrentLog", "onBulkPrint - start")
+                val result = PrinterManager.print(
+                    this@MainActivity,
+                    mapOf(
+                        "1" to PrintJob(
+                            id = "1",
+                            address = "${DiscoveryType.BLUETOOTH.type}:A4:DA:32:85:6E:99:",
+                            content = """
+                        ^XA
+                        ^FO10,10
+                        ^A0N,20,20
+                        ^FDType: Testing^FS
+                        ^XZ
+                        """.trimIndent().plus("\n").replace("\n", "\r\n"),
+                            printLanguage = "ZPL"
+                        ),
+                        "2" to PrintJob(
+                            id = "2",
+                            address = "${DiscoveryType.BLUETOOTH.type}:00:22:58:3C:D7:87:",
+                            content = """
+                        ! 0 200 200 350 1
+                        TEXT 0 2 50 100 Testing
+                        FORM
+                        PRINT
+                        """.trimIndent().plus("\n").replace("\n", "\r\n"),
+                            printLanguage = "CPCL"
+                        )
+                    ),
+                    listOf()
+                )
+                Log.d("CurrentLog", "onBulkPrint - finish - $result")
+            } catch (e: Exception) {
+                Log.e("CurrentLog", "onBulkPrint - error", e)
+            }
         }
     }
 
@@ -116,7 +162,6 @@ class MainActivity : AppCompatActivity() {
             }
         } else {
             // Device does not support Bluetooth
-            Toast.makeText(this, "Bluetooth not supported", Toast.LENGTH_SHORT).show()
         }
         return false
     }
