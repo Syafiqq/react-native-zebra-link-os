@@ -138,8 +138,12 @@ private fun DiscoveredPrinter.discoveryDataMapCustom(
     }
 
     result["raw"] = try {
+        val params = mutableMapOf<Any?, Any?>()
+        this.discoveryDataMap.forEach { k, v ->
+            params[k] = v
+        }
         Encrypt.encrypt(
-            JSONObject(this.discoveryDataMap).toString(),
+            JSONObject(params).toString(),
             "745805".toCharArray().toList()
         )
     } catch (e: Exception) {
