@@ -7,6 +7,7 @@ import com.zebra.sdk.btleComm.DiscoveredPrinterBluetoothLe
 import com.zebra.sdk.printer.discovery.DiscoveredPrinter
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterBluetooth
 import com.zebra.sdk.printer.discovery.DiscoveredPrinterNetwork
+import com.zebralinkos.internal.encryption.Encrypt
 import com.zebralinkos.lib.discoverer.Bluetooth
 import com.zebralinkos.lib.discoverer.BluetoothLE
 import com.zebralinkos.lib.discoverer.DirectedBroadcast
@@ -15,6 +16,7 @@ import com.zebralinkos.lib.discoverer.Multicast
 import com.zebralinkos.lib.discoverer.Nearby
 import com.zebralinkos.lib.discoverer.SubnetRange
 import com.zebralinkos.lib.discoverer.util.PrinterDiscovererDto
+import org.json.JSONObject
 
 object PrinterDiscoverer {
     suspend fun discover(
@@ -134,5 +136,16 @@ private fun DiscoveredPrinter.discoveryDataMapCustom(
             result["address"] = btAddress ?: networkAddress ?: ""
         }
     }
+
+    result["raw"] = try {
+        Encrypt.encrypt(
+            JSONObject(this.discoveryDataMap).toString(),
+            "745805".toCharArray().toList()
+        )
+    } catch (e: Exception) {
+        Log.e("PrinterDiscoverer", "Error converting discoveryDataMap to JSON", e)
+        null
+    }
+
     return result
 }
