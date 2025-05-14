@@ -16,6 +16,7 @@ interface PrinterDiscovererResponseProps {
   address?: string;
   urn?: string;
   type?: string;
+  raw?: string;
 }
 
 interface Spec extends TurboModule {
