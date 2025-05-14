@@ -30,6 +30,7 @@ android {
 }
 
 dependencies {
+    compileOnly(libs.react.android)
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation libs.androidx.core.ktx
