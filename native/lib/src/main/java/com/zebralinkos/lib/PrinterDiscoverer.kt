@@ -102,33 +102,36 @@ private fun DiscoveredPrinter.discoveryDataMapCustom(
     val result = mutableMapOf<String, String?>()
     result["type"] = type.type
     val name = this.discoveryDataMap["FRIENDLY_NAME"]
-    val dnsName = this.discoveryDataMap["DNS_NAME"] ?: this.discoveryDataMap["ADDRESS"]
-    val macAddress = this.discoveryDataMap["MAC_ADDRESS"]
+        ?: this.discoveryDataMap["DNS_NAME"]
+        ?: this.discoveryDataMap["SERIAL_NUMBER"]
+        ?: this.discoveryDataMap["ADDRESS"]
+
+    val btAddress = this.discoveryDataMap["MAC_ADDRESS"]
     val networkAddress = this.discoveryDataMap["ADDRESS"]
     val port = this.discoveryDataMap["PORT_NUMBER"]
     when (this) {
         is DiscoveredPrinterBluetooth -> {
             result["name"] = name
-            result["urn"] = "${type.type}:$macAddress:"
-            result["address"] = "$macAddress"
+            result["urn"] = "${type.type}:${btAddress ?: ""}:"
+            result["address"] = btAddress ?: ""
         }
 
         is DiscoveredPrinterBluetoothLe -> {
             result["name"] = name
-            result["urn"] = "${type.type}:$macAddress:"
-            result["address"] = "$macAddress"
+            result["urn"] = "${type.type}:${btAddress ?: ""}:"
+            result["address"] = btAddress ?: ""
         }
 
         is DiscoveredPrinterNetwork -> {
-            result["name"] = dnsName
-            result["urn"] = "${type.type}:$networkAddress:$port"
-            result["address"] = "$networkAddress"
+            result["name"] = name
+            result["urn"] = "${type.type}:${networkAddress ?: ""}:${port ?: ""}"
+            result["address"] = networkAddress ?: ""
         }
 
         else -> {
-            result["name"] = name ?: dnsName
-            result["urn"] = "${type.type}:${macAddress ?: networkAddress}:$port"
-            result["address"] = "${macAddress ?: networkAddress}"
+            result["name"] = name
+            result["urn"] = "${type.type}:${btAddress ?: networkAddress ?: ""}:${port ?: ""}"
+            result["address"] = btAddress ?: networkAddress ?: ""
         }
     }
     return result
