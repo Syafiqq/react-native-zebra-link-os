@@ -16,17 +16,14 @@ class SubnetRange {
 
             val handler = object : DiscoveryHandler {
                 override fun foundPrinter(printer: DiscoveredPrinter?) {
-                    println("CurrentLog : SubnetRange, foundPrinter")
                     printer?.let { discoveredPrinters.add(it) }
                 }
 
                 override fun discoveryFinished() {
-                    println("CurrentLog : SubnetRange, discoveryFinished")
                     continuation.resume(discoveredPrinters)
                 }
 
                 override fun discoveryError(error: String?) {
-                    println("CurrentLog : SubnetRange, discoveryError")
                     continuation.resumeWithException(
                         Exception(error ?: "Unknown discovery error")
                     )
@@ -43,7 +40,6 @@ class SubnetRange {
                     Looper.myLooper()?.quit()
                 }
             }.start()
-            println("CurrentLog : SubnetRange, startDiscover")
 
             continuation.invokeOnCancellation {}
         }

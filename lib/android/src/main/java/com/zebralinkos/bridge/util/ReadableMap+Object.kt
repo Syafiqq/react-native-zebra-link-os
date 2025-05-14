@@ -1,8 +1,10 @@
 package com.zebralinkos.bridge.util
 
-import com.facebook.react.bridge.*
-import com.zebralinkos.lib.printer.util.PrintJob
+import com.facebook.react.bridge.ReadableArray
+import com.facebook.react.bridge.ReadableMap
+import com.facebook.react.bridge.ReadableType
 import com.zebralinkos.lib.discoverer.util.PrinterDiscovererDto
+import com.zebralinkos.lib.printer.util.PrintJob
 
 fun ReadableMap.toPrinterDiscovererDto(): PrinterDiscovererDto {
     return PrinterDiscovererDto(

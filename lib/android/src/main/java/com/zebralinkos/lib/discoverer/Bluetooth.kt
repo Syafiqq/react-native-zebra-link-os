@@ -17,17 +17,14 @@ class Bluetooth {
 
             val handler = object : DiscoveryHandler {
                 override fun foundPrinter(printer: DiscoveredPrinter?) {
-                    println("CurrentLog : Bluetooth, foundPrinter")
                     printer?.let { discoveredPrinters.add(it) }
                 }
 
                 override fun discoveryFinished() {
-                    println("CurrentLog : Bluetooth, discoveryFinished")
                     continuation.resume(discoveredPrinters)
                 }
 
                 override fun discoveryError(error: String?) {
-                    println("CurrentLog : Bluetooth, discoveryError")
                     continuation.resumeWithException(
                         Exception(error ?: "Unknown discovery error")
                     )
@@ -44,7 +41,6 @@ class Bluetooth {
                     Looper.myLooper()?.quit()
                 }
             }.start()
-            println("CurrentLog : Bluetooth, startDiscover")
 
             continuation.invokeOnCancellation {
             }

@@ -18,17 +18,14 @@ class Multicast {
 
             val handler = object : DiscoveryHandler {
                 override fun foundPrinter(printer: DiscoveredPrinter?) {
-                    println("CurrentLog : Multicast, foundPrinter")
                     printer?.let { discoveredPrinters.add(it) }
                 }
 
                 override fun discoveryFinished() {
-                    println("CurrentLog : Multicast, discoveryFinished")
                     continuation.resume(discoveredPrinters)
                 }
 
                 override fun discoveryError(error: String?) {
-                    println("CurrentLog : Multicast, discoveryError")
                     continuation.resumeWithException(
                         Exception(error ?: "Unknown discovery error")
                     )
@@ -56,7 +53,6 @@ class Multicast {
                     Looper.myLooper()?.quit()
                 }
             }.start()
-            println("CurrentLog : Multicast, startDiscover")
 
             continuation.invokeOnCancellation {}
         }

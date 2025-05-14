@@ -16,17 +16,14 @@ class DirectedBroadcast {
 
             val handler = object : DiscoveryHandler {
                 override fun foundPrinter(printer: DiscoveredPrinter?) {
-                    println("CurrentLog : DirectedBroadcast, foundPrinter")
                     printer?.let { discoveredPrinters.add(it) }
                 }
 
                 override fun discoveryFinished() {
-                    println("CurrentLog : DirectedBroadcast, discoveryFinished")
                     continuation.resume(discoveredPrinters)
                 }
 
                 override fun discoveryError(error: String?) {
-                    println("CurrentLog : DirectedBroadcast, discoveryError")
                     continuation.resumeWithException(
                         Exception(error ?: "Unknown discovery error")
                     )
@@ -43,7 +40,6 @@ class DirectedBroadcast {
                     Looper.myLooper()?.quit()
                 }
             }.start()
-            println("CurrentLog : DirectedBroadcast, startDiscover")
 
             continuation.invokeOnCancellation {}
         }

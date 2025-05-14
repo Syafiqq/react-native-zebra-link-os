@@ -1,7 +1,9 @@
 package com.zebralinkos.bridge.util
 
 
-import com.facebook.react.bridge.*
+import com.facebook.react.bridge.Arguments
+import com.facebook.react.bridge.WritableArray
+import com.facebook.react.bridge.WritableMap
 
 fun printerDiscoveriesList(printers: List<Map<String, String?>>): WritableArray {
     val array: WritableArray = Arguments.createArray()
@@ -13,10 +15,9 @@ fun printerDiscoveriesList(printers: List<Map<String, String?>>): WritableArray 
 
 fun printerDiscoveriesMap(printer: Map<String, String?>): WritableMap {
     val map: WritableMap = Arguments.createMap()
-    map.putString("name", printer["name"])
-    map.putString("urn", printer["urn"])
-    map.putString("address", printer["address"])
-    map.putString("type", printer["type"])
+    printer.forEach { (key, value) ->
+        map.putString(key, value)
+    }
     return map
 }
 

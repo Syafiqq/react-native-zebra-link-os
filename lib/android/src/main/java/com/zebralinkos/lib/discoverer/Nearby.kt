@@ -18,17 +18,14 @@ class Nearby {
 
             val handler = object : DiscoveryHandler {
                 override fun foundPrinter(printer: DiscoveredPrinter?) {
-                    println("CurrentLog : Nearby, foundPrinter")
                     printer?.let { discoveredPrinters.add(it) }
                 }
 
                 override fun discoveryFinished() {
-                    println("CurrentLog : Nearby, discoveryFinished")
                     continuation.resume(discoveredPrinters)
                 }
 
                 override fun discoveryError(error: String?) {
-                    println("CurrentLog : Nearby, discoveryError")
                     continuation.resumeWithException(
                         Exception(error ?: "Unknown discovery error")
                     )
@@ -56,7 +53,6 @@ class Nearby {
                     Looper.myLooper()?.quit()
                 }
             }.start()
-            println("CurrentLog : Nearby, startDiscover")
 
             continuation.invokeOnCancellation {}
         }
