@@ -6,7 +6,7 @@ interface PrinterDiscovererDtoProps {
   bluetoothLE?: boolean;
   localBroadcast?: boolean;
   directIpAddress?: string;
-  multicastHops?: string;
+  multicastHops?: number;
   subnetRange?: string;
   nearby?: boolean;
 }
